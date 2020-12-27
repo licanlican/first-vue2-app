@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1 v-for="item in data" :key="item">
+    {{ `dsdsd${item}` }}
+  </h1>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { ref, watchEffect, onMounted } from "vue";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "HelloWorld",
+  setup() {
+    const data = ref([]);
+    const index = ref(0);
+    onMounted(() => {
+      setInterval(() => {
+        index.value = index.value + 1;
+        data.value[index.value] = index.value;
+      }, 2000);
+    });
+    watchEffect(() => {
+      const idx = index.value;
+      const dom = document.getElementsByTagName("h1");
+      console.log(dom[idx]);
+    }, {
+      flush: 'post',
+      onTrack(e) {
+        console.log(e.target.value)
+      }
+    });
+
+    return { data };
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
