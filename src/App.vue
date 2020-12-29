@@ -1,35 +1,24 @@
 <template>
-  <h1 v-for="item in data" :key="item">
-    {{ `dsdsd${item}` }}
-  </h1>
+  <p>test</p>
+  <Button> 按钮</Button>
 </template>
 
 <script>
 import { ref, watchEffect, onMounted } from "vue";
+import { Button } from "vant";
+
 export default {
   name: "HelloWorld",
-  setup() {
-    const data = ref([]);
-    const index = ref(0);
-    onMounted(() => {
-      setInterval(() => {
-        index.value = index.value + 1;
-        data.value[index.value] = index.value;
-      }, 2000);
-    });
-    watchEffect(() => {
-      const idx = index.value;
-      const dom = document.getElementsByTagName("h1");
-      console.log(dom[idx]);
-    }, {
-      flush: 'post',
-      onTrack(e) {
-        console.log(e.target.value)
-      }
-    });
-
-    return { data };
+  components: {
+    Button,
   },
+  setup() {},
 };
 </script>
+
+<style lang="less" scoped>
+:deep(.van-button__text) {
+  color: red !important;
+}
+</style>
 
